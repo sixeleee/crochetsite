@@ -56,3 +56,13 @@ yarl==1.22.0
 PyMySQL
 gunicorn
 python-dotenv
+gunicorn
+python-decouple
+django-allauth
+PyJWT
+cryptography
+requests
+google-auth
+pillow
+dj-database-url
+whitenoise
