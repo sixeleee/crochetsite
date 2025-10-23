@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us - Crochet Corner{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card">
+                <div class="card-body p-5">
+                    <h1 class="text-center mb-4">About Crochet Corner</h1>
+                    
+                    <div class="text-center mb-4">
+                        <i class="bi bi-scissors" style="font-size: 4rem; color: var(--vintage-coin);"></i>
+                    </div>
+                    
+                    <p class="lead text-center mb-4">
+                        Your trusted destination for beautiful crochet patterns and premium crafting supplies.
+                    </p>
+                    
+                    <h3 class="mt-4 mb-3">Our Story</h3>
+                    <p>
+                        Crochet Corner was founded with a simple mission: to make crochet accessible and enjoyable 
+                        for crafters of all skill levels. We believe that everyone should have access to quality 
+                        patterns, clear video tutorials, and premium supplies to bring their creative visions to life.
+                    </p>
+                    
+                    <h3 class="mt-4 mb-3">What We Offer</h3>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <strong>Video Tutorials:</strong> Step-by-step YouTube guides for every pattern
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <strong>Quality Supplies:</strong> Carefully curated crochet tools and materials
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <strong>Community Support:</strong> Join a thriving community of crochet enthusiasts
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <strong>Personal Collections:</strong> Save and organize your favorite patterns
+                        </li>
+                    </ul>
+                    
+                    <h3 class="mt-4 mb-3">Our Values</h3>
+                    <p>
+                        We're committed to fostering creativity, supporting crafters, and building a welcoming 
+                        community where everyone can learn, share, and grow their crochet skills.
+                    </p>
+                    
+                    <div class="text-center mt-5">
+                        <a href="{% url 'patterns:pattern_list' %}" class="btn btn-primary me-2">
+                            <i class="bi bi-book"></i> Browse Patterns
+                        </a>
+                        <a href="{% url 'contact' %}" class="btn btn-outline-primary">
+                            <i class="bi bi-envelope"></i> Contact Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

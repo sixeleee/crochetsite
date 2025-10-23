@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us - Crochet Corner{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card">
+                <div class="card-body p-5">
+                    <h1 class="text-center mb-4">Contact Us</h1>
+                    
+                    <div class="text-center mb-4">
+                        <i class="bi bi-envelope-heart" style="font-size: 4rem; color: var(--vintage-coin);"></i>
+                    </div>
+                    
+                    <p class="lead text-center mb-5">
+                        We'd love to hear from you! Get in touch with any questions, feedback, or suggestions.
+                    </p>
+                    
+                    <div class="row mb-5">
+                        <div class="col-md-4 text-center mb-4">
+                            <i class="bi bi-envelope-fill fs-2 mb-3" style="color: var(--vintage-coin);"></i>
+                            <h5>Email</h5>
+                            <p class="text-muted">info@crochetcorner.com</p>
+                        </div>
+                        <div class="col-md-4 text-center mb-4">
+                            <i class="bi bi-telephone-fill fs-2 mb-3" style="color: var(--vintage-coin);"></i>
+                            <h5>Phone</h5>
+                            <p class="text-muted">+1 (555) 123-4567</p>
+                        </div>
+                        <div class="col-md-4 text-center mb-4">
+                            <i class="bi bi-clock-fill fs-2 mb-3" style="color: var(--vintage-coin);"></i>
+                            <h5>Hours</h5>
+                            <p class="text-muted">Mon-Fri: 9AM-5PM</p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="mb-4">Send Us a Message</h3>
+                    <form>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Your Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="subject" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-send"></i> Send Message
+                        </button>
+                    </form>
+                    
+                    <div class="mt-5 text-center">
+                        <h5 class="mb-3">Connect With Us</h5>
+                        <div class="social-links">
+                            <a href="https://www.facebook.com/share/1BTefb6wBm/?mibextid=wwXIfr" class="me-3"><i class="bi bi-facebook fs-3" style="color: var(--vintage-coin);"></i></a>
+                            <a href="https://www.instagram.com/plum.adm?igsh=MXJyMjd0emF3ODI3eQ%3D%3D&utm_source=qr" class="me-3"><i class="bi bi-instagram fs-3" style="color: var(--vintage-coin);"></i></a>
+                            <a href="https://ph.pinterest.com/" class="me-3"><i class="bi bi-pinterest fs-3" style="color: var(--vintage-coin);"></i></a>
+                            <a href="#"><i class="bi bi-youtube fs-3" style="color: var(--vintage-coin);"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block title %}My Inquiries - Crochet Corner{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center mb-4">
+        <i class="bi bi-envelope-paper"></i> My Inquiries
+    </h1>
+    
+    <p class="text-center text-muted mb-5">
+        Track your product inquiries and view responses from our team
+    </p>
+
+    {% if inquiries %}
+    <div class="row">
+        {% for inquiry in inquiries %}
+        <div class="col-12 mb-4">
+            <div class="card">
+                <div class="card-header" style="background-color: var(--southern-sand);">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h5 class="mb-0">
+                                <i class="bi bi-box-seam"></i> {{ inquiry.product.name }}
+                            </h5>
+                            <small class="text-muted">
+                                Sent on {{ inquiry.date_sent|date:"F d, Y - g:i A" }}
+                            </small>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <span class="badge {% if inquiry.status == 'pending' %}bg-warning
+                                {% elif inquiry.status == 'responded' %}bg-success
+                                {% else %}bg-secondary{% endif %} fs-6">
+                                {% if inquiry.status == 'pending' %}
+                                    <i class="bi bi-clock-history"></i> Pending
+                                {% elif inquiry.status == 'responded' %}
+                                    <i class="bi bi-check-circle"></i> Responded
+                                {% else %}
+                                    <i class="bi bi-check-all"></i> Resolved
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6 class="text-muted mb-2">
+                            <i class="bi bi-person-fill"></i> Your Message:
+                        </h6>
+                        <div class="p-3 rounded" style="background-color: var(--isabelline);">
+                            <p class="mb-0" style="white-space: pre-wrap;">{{ inquiry.message }}</p>
+                        </div>
+                    </div>
+
+                    {% if inquiry.admin_response %}
+                    <div class="mt-4">
+                        <h6 class="text-success mb-2">
+                            <i class="bi bi-reply-fill"></i> Our Response:
+                        </h6>
+                        <div class="p-3 rounded" style="background-color: #d4edda; border-left: 4px solid #28a745;">
+                            <p class="mb-2" style="white-space: pre-wrap;">{{ inquiry.admin_response }}</p>
+                            <small class="text-muted">
+                                <i class="bi bi-calendar-check"></i> 
+                                Responded on {{ inquiry.response_date|date:"F d, Y - g:i A" }}
+                            </small>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info mt-3">
+                        <i class="bi bi-hourglass-split"></i> 
+                        We're reviewing your inquiry. You'll receive a response via email soon!
+                    </div>
+                    {% endif %}
+
+                    <div class="mt-3">
+                        <a href="{% url 'store:product_list' %}" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-arrow-left"></i> Back to Store
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card text-center p-5" style="background-color: var(--isabelline);">
+                <div class="card-body">
+                    <i class="bi bi-inbox fs-1 mb-3" style="color: var(--taupe);"></i>
+                    <h4 class="mb-3">No Inquiries Yet</h4>
+                    <p class="text-muted mb-4">
+                        You haven't sent any product inquiries yet. Browse our store and send an inquiry about any product you're interested in!
+                    </p>
+                    <a href="{% url 'store:product_list' %}" class="btn btn-primary">
+                        <i class="bi bi-shop"></i> Browse Products
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .card-header h5 {
+        color: var(--vintage-coin);
+    }
+    
+    .badge {
+        padding: 0.5rem 1rem;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 20px auto;">
+    <h1>{{ title }}</h1>
+    
+    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+        <h3>Inquiry Details</h3>
+        <p><strong>Product:</strong> {{ inquiry.product.name }}</p>
+        <p><strong>Customer Name:</strong> {{ inquiry.name }}</p>
+        <p><strong>Customer Email:</strong> {{ inquiry.email }}</p>
+        <p><strong>Date Sent:</strong> {{ inquiry.date_sent|date:"F d, Y - g:i A" }}</p>
+        <style>
+.status-pending { color: #ffc107; }
+.status-responded { color: #28a745; }
+.status-other { color: #6c757d; }
+</style>
+
+<p><strong>Current Status:</strong> 
+    <span class="
+        {% if inquiry.status == 'pending' %}status-pending
+        {% elif inquiry.status == 'responded' %}status-responded
+        {% else %}status-other{% endif %}">
+        {{ inquiry.get_status_display }}
+    </span>
+</p>
+
+    </div>
+    
+    <div style="background: #fff; padding: 20px; border: 1px solid #dee2e6; border-radius: 8px; margin-bottom: 20px;">
+        <h3>Customer's Message:</h3>
+        <p style="white-space: pre-wrap; line-height: 1.8;">{{ inquiry.message }}</p>
+    </div>
+    
+    {% if inquiry.admin_response %}
+    <div style="background: #d4edda; padding: 20px; border: 1px solid #c3e6cb; border-radius: 8px; margin-bottom: 20px;">
+        <h3>Previous Response:</h3>
+        <p style="white-space: pre-wrap; line-height: 1.8;">{{ inquiry.admin_response }}</p>
+        <p><small><strong>Sent on:</strong> {{ inquiry.response_date|date:"F d, Y - g:i A" }}</small></p>
+    </div>
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        <div style="margin-bottom: 20px;">
+            <label for="admin_response" style="display: block; margin-bottom: 10px; font-weight: bold;">
+                Your Response:
+            </label>
+            <textarea 
+                name="admin_response" 
+                id="admin_response" 
+                rows="10" 
+                style="width: 100%; padding: 10px; border: 1px solid #ced4da; border-radius: 4px; font-size: 14px;"
+                required
+            >{% if inquiry.admin_response %}{{ inquiry.admin_response }}{% endif %}</textarea>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <label style="display: flex; align-items: center; cursor: pointer;">
+                <input type="checkbox" name="send_email" checked style="margin-right: 10px; width: 18px; height: 18px;">
+                <span>Send email notification to {{ inquiry.email }}</span>
+            </label>
+        </div>
+        
+        <div style="display: flex; gap: 10px;">
+            <button type="submit" style="background: #417690; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
+                Send Response
+            </button>
+            <a href="{% url 'admin:store_inquiry_changelist' %}" style="background: #6c757d; color: white; padding: 10px 20px; border: none; border-radius: 4px; text-decoration: none; display: inline-block; font-size: 14px;">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}My Favorites - Crochet Corner{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center mb-4">My Favorites</h1>
+    
+    <div class="mb-5">
+        <h2 class="mb-4">
+            <i class="bi bi-book"></i> Favorite Patterns
+            <span class="badge bg-secondary ms-2">{{ favorite_patterns.count }}</span>
+        </h2>
+        
+        {% if favorite_patterns %}
+        <div class="row g-4">
+            {% for favorite in favorite_patterns %}
+            <div class="col-md-4">
+                <div class="card h-100">
+                    {% if favorite.pattern.image %}
+                    <img src="{{ favorite.pattern.image.url }}" class="card-img-top" alt="{{ favorite.pattern.title }}">
+                    {% else %}
+                    <img src="https://via.placeholder.com/400x250?text=Crochet+Pattern" class="card-img-top" alt="{{ favorite.pattern.title }}">
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title">{{ favorite.pattern.title }}</h5>
+                            <form action="{% url 'accounts:remove_favorite' 'pattern' favorite.pattern.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-favorite active">
+                                    <i class="bi bi-heart-fill"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <span class="badge bg-secondary mb-2 align-self-start">{{ favorite.pattern.get_category_display }}</span>
+                        <p class="card-text flex-grow-1">{{ favorite.pattern.description|truncatewords:15 }}</p>
+                        <small class="text-muted mb-2">Added {{ favorite.date_added|date:"M d, Y" }}</small>
+                        <a href="{% url 'patterns:pattern_detail' favorite.pattern.id %}" class="btn btn-primary mt-auto">
+                            <i class="bi bi-eye"></i> View Pattern
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="card text-center p-5" style="background-color: var(--isabelline);">
+            <div class="card-body">
+                <i class="bi bi-heart fs-1 text-muted"></i>
+                <p class="lead text-muted mt-3 mb-3">You haven't saved any patterns yet.</p>
+                <a href="{% url 'patterns:pattern_list' %}" class="btn btn-primary">
+                    <i class="bi bi-book"></i> Browse Patterns
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="mb-5">
+        <h2 class="mb-4">
+            <i class="bi bi-shop"></i> Favorite Products
+            <span class="badge bg-secondary ms-2">{{ favorite_products.count }}</span>
+        </h2>
+        
+        {% if favorite_products %}
+        <div class="row g-4">
+            {% for favorite in favorite_products %}
+            <div class="col-md-4">
+                <div class="card h-100">
+                    {% if favorite.product.image %}
+                    <img src="{{ favorite.product.image.url }}" class="card-img-top" alt="{{ favorite.product.name }}">
+                    {% else %}
+                    <img src="https://via.placeholder.com/400x250?text=Crochet+Product" class="card-img-top" alt="{{ favorite.product.name }}">
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <h5 class="card-title">{{ favorite.product.name }}</h5>
+                            <form action="{% url 'accounts:remove_favorite' 'product' favorite.product.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-favorite active">
+                                    <i class="bi bi-heart-fill"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <p class="h4 mb-3" style="color: var(--vintage-coin);">${{ favorite.product.price }}</p>
+                        <p class="card-text flex-grow-1">{{ favorite.product.description|truncatewords:15 }}</p>
+                        <small class="text-muted mb-2">Added {{ favorite.date_added|date:"M d, Y" }}</small>
+                        <a href="{% url 'store:inquire_product' favorite.product.id %}" class="btn btn-primary mt-auto">
+                            <i class="bi bi-envelope"></i> Inquire
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="card text-center p-5" style="background-color: var(--isabelline);">
+            <div class="card-body">
+                <i class="bi bi-cart-heart fs-1 text-muted"></i>
+                <p class="lead text-muted mt-3 mb-3">You haven't saved any products yet.</p>
+                <a href="{% url 'store:product_list' %}" class="btn btn-primary">
+                    <i class="bi bi-shop"></i> Browse Products
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

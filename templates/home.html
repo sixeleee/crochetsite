@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Crochet Corner{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="container text-center">
+        <h1 class="mb-3">Welcome to Crochet Corner</h1>
+        <p class="lead mb-4">Discover beautiful crochet patterns with video tutorials and premium crafting supplies</p>
+        <div>
+            <a href="{% url 'patterns:pattern_list' %}" class="btn btn-primary me-2">
+                <i class="bi bi-book"></i> Browse Patterns
+            </a>
+            <a href="{% url 'store:product_list' %}" class="btn btn-outline-primary">
+                <i class="bi bi-shop"></i> Visit Store
+            </a>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card h-100 text-center p-4">
+                <div class="card-body">
+                    <i class="bi bi-youtube text-danger fs-1 mb-3"></i>
+                    <h3 class="card-title">Video Tutorials</h3>
+                    <p class="card-text">Learn with step-by-step YouTube tutorials for every pattern</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 text-center p-4">
+                <div class="card-body">
+                    <i class="bi bi-heart-fill text-danger fs-1 mb-3"></i>
+                    <h3 class="card-title">Save Favorites</h3>
+                    <p class="card-text">Create your personal collection of favorite patterns and products</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 text-center p-4">
+                <div class="card-body">
+                    <i class="bi bi-cart-check fs-1 mb-3" style="color: var(--vintage-coin);"></i>
+                    <h3 class="card-title">Quality Products</h3>
+                    <p class="card-text">Browse premium crochet products and tools for your projects</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-5" style="background: linear-gradient(135deg, var(--southern-sand) 0%, var(--isabelline) 100%);">
+        <div class="card-body text-center p-5">
+            <h2 class="mb-3">Start Your Crochet Journey Today</h2>
+            <p class="lead mb-4">Join our community of crafters and create beautiful handmade pieces</p>
+            {% if not user.is_authenticated %}
+            <a href="{% url 'accounts:register' %}" class="btn btn-primary btn-lg">
+                <i class="bi bi-person-plus"></i> Create Free Account
+            </a>
+            {% else %}
+            <a href="{% url 'patterns:pattern_list' %}" class="btn btn-primary btn-lg">
+                <i class="bi bi-book"></i> Explore Patterns
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

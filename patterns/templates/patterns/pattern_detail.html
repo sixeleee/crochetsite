@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ pattern.title }} - Crochet Corner{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h1 class="mb-2">{{ pattern.title }}</h1>
+                            <div class="mb-3">
+                                <span class="badge bg-secondary me-2">{{ pattern.get_category_display }}</span>
+                                <style>
+.badge-beginner { background-color: #28a745; }
+.badge-intermediate { background-color: #ffc107; }
+.badge-advanced { background-color: #dc3545; }
+</style>
+
+<span class="badge 
+    {% if pattern.difficulty == 'beginner' %}badge-beginner
+    {% elif pattern.difficulty == 'intermediate' %}badge-intermediate
+    {% else %}badge-advanced{% endif %}">
+    {{ pattern.get_difficulty_display }}
+</span>
+
+                            </div>
+                        </div>
+                        {% if user.is_authenticated %}
+                        {% if is_favorited %}
+                        <form action="{% url 'accounts:remove_favorite' 'pattern' pattern.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-favorite active" title="Remove from favorites">
+                                <i class="bi bi-heart-fill"></i>
+                            </button>
+                        </form>
+                        {% else %}
+                        <form action="{% url 'accounts:add_favorite' 'pattern' pattern.id %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-favorite" title="Add to favorites">
+                                <i class="bi bi-heart"></i>
+                            </button>
+                        </form>
+                        {% endif %}
+                        {% else %}
+                        <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-heart"></i> Login to Save
+                        </a>
+                        {% endif %}
+                    </div>
+
+                    {% if pattern.image %}
+                    <img src="{{ pattern.image.url }}" class="img-fluid rounded mb-4" alt="{{ pattern.title }}">
+                    {% endif %}
+
+                    {% if pattern.estimated_time or pattern.finished_size %}
+                    <div class="row mb-4">
+                        {% if pattern.estimated_time %}
+                        <div class="col-md-6">
+                            <div class="card" style="background-color: var(--isabelline);">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-clock fs-3 mb-2" style="color: var(--vintage-coin);"></i>
+                                    <h6>Estimated Time</h6>
+                                    <p class="mb-0">{{ pattern.estimated_time }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% if pattern.finished_size %}
+                        <div class="col-md-6">
+                            <div class="card" style="background-color: var(--isabelline);">
+                                <div class="card-body text-center">
+                                    <i class="bi bi-rulers fs-3 mb-2" style="color: var(--vintage-coin);"></i>
+                                    <h6>Finished Size</h6>
+                                    <p class="mb-0">{{ pattern.finished_size }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                    <h3 class="mb-3">About This Pattern</h3>
+                    <p class="lead mb-4">{{ pattern.description }}</p>
+
+                    <hr class="my-4">
+
+                    {% if pattern.materials %}
+                    <h3 class="mb-3"><i class="bi bi-basket3"></i> Materials Needed</h3>
+                    <div class="card mb-4" style="background-color: var(--isabelline);">
+                        <div class="card-body">
+                            <pre style="white-space: pre-wrap; font-family: 'Poppins', sans-serif; background: transparent; border: none;">{{ pattern.materials }}</pre>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if pattern.tutorial_steps %}
+                    <h3 class="mb-3"><i class="bi bi-list-ol"></i> Step-by-Step Instructions</h3>
+                    <div class="card mb-4" style="background-color: #fff; border: 2px solid var(--taupe);">
+                        <div class="card-body">
+                            <pre style="white-space: pre-wrap; font-family: 'Poppins', sans-serif; background: transparent; border: none; line-height: 1.8;">{{ pattern.tutorial_steps }}</pre>
+                        </div>
+                    </div>
+
+                    <div class="text-center mb-4">
+                        <a href="{% url 'patterns:download_tutorial' pattern.id %}" class="btn btn-success btn-lg">
+                            <i class="bi bi-download"></i> Download Tutorial (.txt)
+                        </a>
+                        <p class="text-muted mt-2 small">
+                            <i class="bi bi-info-circle"></i> Save these instructions to your device for offline use
+                        </p>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle"></i> Written instructions are not available for this pattern. Please watch the video tutorial below.
+                    </div>
+                    {% endif %}
+
+                    <hr class="my-4">
+
+                    {% if pattern.youtube_link %}
+                    <h3 class="mb-3"><i class="bi bi-youtube text-danger"></i> Video Tutorial</h3>
+                    <div class="ratio ratio-16x9 mb-4">
+                        <iframe src="{{ pattern.get_youtube_embed_url }}" title="{{ pattern.title }} Tutorial" allowfullscreen class="rounded"></iframe>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-secondary">
+                        <i class="bi bi-camera-video"></i> Video tutorial not available for this pattern. Follow the written instructions above.
+                    </div>
+                    {% endif %}
+
+                    <div class="d-flex gap-2 flex-wrap justify-content-center">
+                        <a href="{% url 'patterns:pattern_list' %}" class="btn btn-outline-primary">
+                            <i class="bi bi-arrow-left"></i> Back to Patterns
+                        </a>
+                        <a href="{{ pattern.youtube_link }}" target="_blank" class="btn btn-outline-danger">
+                            <i class="bi bi-youtube"></i> Watch on YouTube
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    pre {
+        margin-bottom: 0;
+    }
+    
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-success:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(40, 167, 69, 0.3);
+    }
+</style>
+{% endblock %}

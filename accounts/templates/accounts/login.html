@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+
+{% block title %}Login - Crochet Corner{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-5 mx-auto">
+            <div class="card">
+                <div class="card-body p-5">
+                    <h2 class="text-center mb-4">Welcome Back</h2>
+                    <p class="text-center text-muted mb-4">Login to access your favorites and more</p>
+                    
+                    <!-- Google Sign In Button -->
+                    <a href="{% provider_login_url 'google' %}" class="btn btn-light w-100 mb-3 d-flex align-items-center justify-content-center" style="border: 2px solid #ddd; padding: 12px;">
+                        <img src="https://www.google.com/favicon.ico" alt="Google" style="width: 20px; height: 20px; margin-right: 10px;">
+                        <span style="font-weight: 500;">Continue with Google</span>
+                    </a>
+                    
+                    <div class="text-center my-3">
+                        <span class="text-muted">OR</span>
+                    </div>
+                    
+                    <!-- Traditional Login Form -->
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" class="form-control" id="username" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" id="password" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 mb-3">
+                            <i class="bi bi-box-arrow-in-right"></i> Login with Username
+                        </button>
+
+                        <p class="text-center mb-0">
+                            Don't have an account? 
+                            <a href="{% url 'accounts:register' %}" style="color: var(--vintage-coin);">Register here</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
