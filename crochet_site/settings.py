@@ -87,11 +87,11 @@ WSGI_APPLICATION = 'crochet_site.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('crochet_db'),
-        'USER': os.environ.get('root'),
-        'PASSWORD': os.environ.get(''),
-        'HOST': os.environ.get('localhost'),
-        'PORT': os.environ.get('3306'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         } 
