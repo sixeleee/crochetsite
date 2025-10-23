@@ -26,7 +26,10 @@ SECRET_KEY = 'django-insecure-a29*5()wei^z7iu0pgth8w-n9ia9l^c)ma3dh&h!tb)5i0!*br
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost',
+    '127.0.0.1',
+    '.railway.app',  # This is crucial!
+    os.environ.get('RAILWAY_PUBLIC_DOMAIN', ''),]
 
 
 # Application definition
@@ -98,6 +101,9 @@ DATABASES = {
     }
 }
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.railway.app',
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -142,7 +148,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
