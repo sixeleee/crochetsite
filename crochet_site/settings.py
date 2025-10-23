@@ -86,22 +86,20 @@ WSGI_APPLICATION = 'crochet_site.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_NAME', 'railway'),
-        'USER': os.environ.get('DB_USER', 'root'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT', '22721'),
+        'HOST': os.environ.get('DB_HOST'),  # This is coming back as None!
+        'PORT': os.environ.get('DB_PORT', '3306'),
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             'charset': 'utf8mb4',
         },
     }
 }
-
 CSRF_TRUSTED_ORIGINS = [
     'https://*.railway.app',
 ]
