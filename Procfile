@@ -1,1 +1,1 @@
-web: gunicorn crochet_site.wsgi --bind 0.0.0.0:$PORT --log-file -
+web: python manage.py migrate && gunicorn your_project.wsgi:application --bind 0.0.0.0:$PORT
